@@ -8,12 +8,12 @@ let Router = DefaultRouter;
 
 let routes = [
   {
-    "path": "/HelloWorld",
-    "exact": true,
-    "component": require('../HelloWorld.js').default
+    "path": "/",
+    "component": require('../HelloWorld').default,
+    "exact": true
   },
   {
-    "component": () => React.createElement(require('E:/github/antd-course/node_modules/_umi-build-dev@1.2.7@umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/page', hasRoutesInConfig: false })
+    "component": () => React.createElement(require('E:/github/antd-course/node_modules/_umi-build-dev@1.2.7@umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/page', hasRoutesInConfig: true })
   }
 ];
 window.g_plugins.applyForEach('patchRoutes', { initialValue: routes });
