@@ -1,6 +1,6 @@
 import React from 'react';
-import {Table} from 'antd';
-import {connect} from 'dva';
+import { Table } from 'antd';
+import { connect } from 'dva';
 
 class List extends React.Component {
     columns = [
@@ -19,25 +19,26 @@ class List extends React.Component {
     componentDidMount() {
         this
             .props
-            .dispatch({type: 'cards/queryList'});
+            .dispatch({ type: 'cards/queryList' });
     }
 
     render() {
-        const {cardsList, cardsLoading} = this.props;
+        const { cardsList, cardsLoading } = this.props;
         return (
             <div>
                 <Table
                     columns={this.columns}
-                    dataIndex={cardsList}
+                    dataSource={cardsList}
                     loading={cardsLoading}
-                    rowKey="id"/>
+                    rowKey="id" />
             </div>
         );
     }
 }
 
 function mapStateToProps(state) {
-    return {cardsList: state.cardsList, cardsLoading: state.loading.effects['cards/queryList']};
+    return { cardsList: state.cards.cardsList, cardsLoading: state.loading.effects['cards/queryList'] };
 }
+
 
 export default connect(mapStateToProps)(List);

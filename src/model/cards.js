@@ -31,6 +31,7 @@ export default {
             const {call, put} = sagaEffects;
             yield call(delay, 3000);
             yield put({type: 'initList', payload: listData});
+            
         }
     },
     reducers : {
