@@ -16,6 +16,12 @@ class List extends React.Component {
         }
     ];
 
+    componentDidMount() {
+        this
+            .props
+            .dispatch({type: 'cards/queryList'});
+    }
+
     render() {
         const {cardsList, cardsLoading} = this.props;
         return (
