@@ -3,6 +3,9 @@ export default {
         ['umi-plugin-react', {
             antd: true,
             dva: true,
+            locale: {
+                enable: true,
+            },
         }],
     ],
     routes: [{
@@ -26,7 +29,11 @@ export default {
                 ]
             },
             {
-                path:'puzzlecards',component:'./puzzlecards'
+                path: 'puzzlecards', component: './puzzlecards'
+            },
+            {
+                path: 'list',
+                component: '../page/list'
             }
         ]
     }
