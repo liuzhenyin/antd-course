@@ -1,4 +1,8 @@
 export default {
+    outputPath: "./build",
+    theme: {
+        "@primary-color": "#30b767",
+    },
     plugins: [
         ['umi-plugin-react', {
             antd: true,
@@ -14,7 +18,7 @@ export default {
         routes: [
             {
                 path: '/',
-                component: 'HelloWorld'
+                component: 'css-modules-with-antd'
             },
             {
                 path: 'helloworld',
@@ -34,6 +38,14 @@ export default {
             {
                 path: 'list',
                 component: '../page/list'
+            },
+            {
+                path: 'css-modules-with-less',
+                component: 'css-modules-with-less/Index'
+            },
+            {
+                path: 'css-modules-with-antd',
+                component: 'css-modules-with-antd/Index'
             }
         ]
     }
