@@ -1,43 +1,60 @@
-import request from '../util/request';
-
-const delay = (millisecond) => {
-    return new Promise((resolve) => {
-        setTimeout(resolve, millisecond);
-    });
-};
+import * as cardsService from '../service/cards';
 
 export default {
-    namespace : 'cards',
-    state : {
-        cardsList: []
+
+  namespace: 'cards',
+
+  state: {
+    cardsList: [],
+    statistic: {},
+  },
+
+  effects: {
+    *queryList({ _ }, { call, put }) {
+      const rsp = yield call(cardsService.queryList);
+      console.log('queryList');
+      console.log(rsp);
+      yield put({ type: 'saveList', payload: { cardsList: rsp.result } });
     },
-    effects : {
-        *queryList(_, sagaEffects) {
-            const listData = [
-                {
-                    name: 'umi',
-                    desc: '极快的类 Next.js 的 React 应用框架',
-                    url: 'https://umijs.org'
-                }, {
-                    name: 'antd',
-                    desc: '一个服务于企业级产品的设计体系',
-                    url: 'https://ant.design/index-cn'
-                }, {
-                    name: 'antd-pro',
-                    desc: '一个服务于企业级产品的设计体系',
-                    url: 'https://ant.design/index-cn'
-                }
-            ];
-            const {call, put} = sagaEffects;
-            yield call(delay, 3000);
-            yield put({type: 'initList', payload: listData});
-            
-        }
+    *deleteOne({ payload }, { call, put }) {
+      const rsp = yield call(cardsService.deleteOne, payload);
+      console.log('deleteOne');
+      console.log(rsp);
+      return rsp;
     },
-    reducers : {
-        initList(state, {payload}) {
-            const cardsList = [...payload];
-            return {cardsList};
-        }
-    }
-}
+    *addOne({ payload }, { call, put }) {
+      const rsp = yield call(cardsService.addOne, payload);
+      yield put({ type: 'queryList' });
+      return rsp;
+    },
+    *getStatistic({ payload }, { call, put }) {
+      const rsp = yield call(cardsService.getStatistic, payload);
+      yield put({
+        type: 'saveStatistic',
+        payload: {
+          id: payload,
+          data: rsp.result,
+        },
+      });
+      return rsp;
+    },
+  },
+
+  reducers: {
+    saveList(state, { payload: { cardsList } }) {
+      return {
+        ...state,
+        cardsList,
+      }
+    },
+    saveStatistic(state, { payload: { id, data } }) {
+      return {
+        ...state,
+        statistic: {
+          ...state.statistic,
+          [id]: data,
+        },
+      }
+    },
+  },
+};
